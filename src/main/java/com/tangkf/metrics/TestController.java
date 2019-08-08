@@ -1,6 +1,6 @@
 package com.tangkf.metrics;
 
-import com.codahale.metrics.annotation.Timed;
+import com.codahale.metrics.annotation.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpResponse;
 import org.slf4j.Logger;
@@ -14,6 +14,7 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.net.URI;
+import java.util.Random;
 
 @Slf4j
 @Controller
@@ -23,6 +24,10 @@ public class TestController {
 
 	@Inject private RestProvider restProvider;
 
+	@ResponseMetered(name = "testResponseMetered")
+	@ExceptionMetered(name = "testExceptionMetered")
+	@Counted(name = "testCounted")
+	@Metered(name = "testMetered")
 	@Timed
 	@ResponseBody
 	@RequestMapping("/test/api")
@@ -35,5 +40,12 @@ public class TestController {
 		HttpResponse resp =
 			restProvider.get(new URI("http://api.openweathermap.org/data/2.5/weather?q=Bristol,CT"));
 		return resp.getEntity().toString();
+	}
+
+	@Gauge(name = "api2")
+    @ResponseBody
+	@RequestMapping("/test/api2")
+	public Integer process2() {
+        return new Random().nextInt();
 	}
 }

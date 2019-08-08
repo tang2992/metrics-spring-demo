@@ -69,11 +69,11 @@
 			<artifactId>metrics-logback</artifactId>
 			<version>${metrics.version}</version>
 		</dependency>
-		<dependency>
+		<!--<dependency>
 			<groupId>io.dropwizard.metrics</groupId>
 			<artifactId>metrics-httpclient</artifactId>
 			<version>${metrics.version}</version>
-		</dependency>
+		</dependency>-->
 		<dependency>
 			<groupId>io.dropwizard.metrics</groupId>
 			<artifactId>metrics-httpasyncclient</artifactId>
