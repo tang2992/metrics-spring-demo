@@ -18,8 +18,6 @@ import java.util.concurrent.*;
 public class ExecutorConfig {
     @Resource
     private MetricRegistry metricRegistry;
-    @Resource
-    private ThreadPoolTaskExecutor asyncServiceExecutor;
 
     @Bean
     public Executor asyncServiceExecutor() {

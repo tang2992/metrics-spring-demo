@@ -71,6 +71,6 @@ public class MetricsConfigurer extends MetricsConfigurerAdapter {
 	public void configureReporters(MetricRegistry metricRegistry) {
 		OpenFalcon openFalcon = new OpenFalcon.Builder("http://localhost:1988").create();
 //		OpenFalconReporter.forRegistry(metricRegistry).build(openFalcon).start(15, TimeUnit.SECONDS);
-		Slf4jReporter.forRegistry(metricRegistry).build().start(5, TimeUnit.SECONDS);
+		Slf4jReporter.forRegistry(metricRegistry).build().start(15, TimeUnit.SECONDS);
 	}
 }
