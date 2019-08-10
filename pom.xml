@@ -69,11 +69,11 @@
 			<artifactId>metrics-logback</artifactId>
 			<version>${metrics.version}</version>
 		</dependency>
-		<!--<dependency>
+		<dependency>
 			<groupId>io.dropwizard.metrics</groupId>
 			<artifactId>metrics-httpclient</artifactId>
 			<version>${metrics.version}</version>
-		</dependency>-->
+		</dependency>
 		<dependency>
 			<groupId>io.dropwizard.metrics</groupId>
 			<artifactId>metrics-httpasyncclient</artifactId>
@@ -83,6 +83,11 @@
 			<groupId>io.dropwizard.metrics</groupId>
 			<artifactId>metrics-healthchecks</artifactId>
 			<version>${metrics.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.asynchttpclient</groupId>
+			<artifactId>async-http-client</artifactId>
+			<version>2.10.1</version>
 		</dependency>
 
 		<dependency>

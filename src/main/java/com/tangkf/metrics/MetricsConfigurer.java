@@ -11,6 +11,8 @@ import com.codahale.metrics.jvm.ThreadStatesGaugeSet;
 import com.codahale.metrics.servlets.AdminServlet;
 import com.ryantenney.metrics.spring.config.annotation.EnableMetrics;
 import com.ryantenney.metrics.spring.config.annotation.MetricsConfigurerAdapter;
+import com.tangkf.metrics.reporter.OpenFalcon;
+import com.tangkf.metrics.reporter.OpenFalconReporter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.client.HttpClient;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
@@ -76,6 +78,7 @@ public class MetricsConfigurer extends MetricsConfigurerAdapter {
 	
 	@Override
 	public void configureReporters(MetricRegistry metricRegistry) {
-		Slf4jReporter.forRegistry(metricRegistry).build().start(15, TimeUnit.SECONDS);
+		OpenFalcon openFalcon = new OpenFalcon.Builder("http:localhost:1988").create();
+		OpenFalconReporter.forRegistry(metricRegistry).build(openFalcon).start(15, TimeUnit.SECONDS);
 	}	
 }
