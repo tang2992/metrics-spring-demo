@@ -1,4 +1,4 @@
-package com.tangkf.metrics;
+package com.tangkf.metrics.config;
 
 import com.codahale.metrics.MetricRegistry;
 import com.codahale.metrics.Slf4jReporter;
@@ -11,6 +11,7 @@ import com.codahale.metrics.jvm.ThreadStatesGaugeSet;
 import com.codahale.metrics.servlets.AdminServlet;
 import com.ryantenney.metrics.spring.config.annotation.EnableMetrics;
 import com.ryantenney.metrics.spring.config.annotation.MetricsConfigurerAdapter;
+import com.tangkf.metrics.RestProvider;
 import com.tangkf.metrics.reporter.OpenFalcon;
 import com.tangkf.metrics.reporter.OpenFalconReporter;
 import lombok.extern.slf4j.Slf4j;
@@ -30,17 +31,7 @@ public class MetricsConfigurer extends MetricsConfigurerAdapter {
 	private MetricRegistry registry;
 	private HealthCheckRegistry healthCheckRegistry;
 
-	@Bean
-	public RestProvider getRestProvider() {
-		return new RestProvider();
-	}
-	
-	@Bean
-	public HttpClient getHttpClient() {
-		return InstrumentedHttpClients.createDefault(getMetricRegistry(),
-			HttpClientMetricNameStrategies.QUERYLESS_URL_AND_METHOD
-		);
-	}
+
 //	@Bean
 //	public ServletRegistrationBean servletRegistrationBean(MetricRegistry metricRegistry) {
 //		return new ServletRegistrationBean(new MetricsServlet(metricRegistry), "/monitor/metrics");
@@ -59,9 +50,9 @@ public class MetricsConfigurer extends MetricsConfigurerAdapter {
 			registry = new MetricRegistry();
 		
 			// register JVM metrics
-			registry.registerAll(new GarbageCollectorMetricSet());
-			registry.registerAll(new MemoryUsageGaugeSet());
-			registry.registerAll(new ThreadStatesGaugeSet());
+//			registry.registerAll(new GarbageCollectorMetricSet());
+//			registry.registerAll(new MemoryUsageGaugeSet());
+//			registry.registerAll(new ThreadStatesGaugeSet());
 
 		}
 		
@@ -79,7 +70,7 @@ public class MetricsConfigurer extends MetricsConfigurerAdapter {
 	@Override
 	public void configureReporters(MetricRegistry metricRegistry) {
 		OpenFalcon openFalcon = new OpenFalcon.Builder("http://localhost:1988").create();
-		OpenFalconReporter.forRegistry(metricRegistry).build(openFalcon).start(15, TimeUnit.SECONDS);
-		Slf4jReporter.forRegistry(metricRegistry).build().start(15, TimeUnit.SECONDS);
+//		OpenFalconReporter.forRegistry(metricRegistry).build(openFalcon).start(15, TimeUnit.SECONDS);
+		Slf4jReporter.forRegistry(metricRegistry).build().start(5, TimeUnit.SECONDS);
 	}
 }
