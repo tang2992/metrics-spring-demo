@@ -1,7 +1,9 @@
 package com.tangkf.metrics.reporter;
 
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.asynchttpclient.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,12 +15,12 @@ import java.util.Set;
 /**
  * Created by tangshangwen on 17-3-6.
  */
+@Slf4j
 public class OpenFalcon {
 
     public static final int DEFAULT_BATCH_SIZE_LIMIT = 10;
     public static final int CONN_TIMEOUT_DEFAULT_MS = 5000;
     public static final int READ_TIMEOUT_DEFAULT_MS = 5000;
-    public static final Logger logger = LoggerFactory.getLogger(OpenFalcon.class);
 
     public static Builder forService(String baseUrl) {
         return new Builder(baseUrl);
@@ -59,7 +61,7 @@ public class OpenFalcon {
                 .setReadTimeout(readTimeout)
                 .build();
         ahc = new DefaultAsyncHttpClient(acc);
-        this.requestBuilder = ahc.preparePatch(baseURL + "/v1/push");
+        this.requestBuilder = ahc.preparePost(baseURL + "/v1/push");
     }
 
     public void setBatchSizeLimit(int batchSizeLimit) {
@@ -71,6 +73,11 @@ public class OpenFalcon {
     }
 
     private void sendHelper(Set<OpenFalconMetric> metrics) {
+        try {
+            log.info("{}", mapper.writeValueAsString(metrics));
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
         if (!metrics.isEmpty()) {
             try {
                 requestBuilder
@@ -79,7 +86,7 @@ public class OpenFalcon {
                             @Override
                             public Void onCompleted(Response response) throws Exception {
                                 if (response.getStatusCode() != 200) {
-                                    logger.error("send to open falcon endpoint failed: ("
+                                    log.error("send to open falcon endpoint failed: ("
                                             + response.getStatusCode() + ") "
                                             + response.getResponseBody());
                                 }
@@ -87,13 +94,13 @@ public class OpenFalcon {
                             }
                         });
             } catch (Throwable ex) {
-                logger.error("send to open falcon endpoint failed", ex);
+                log.error("send to open falcon endpoint failed", ex);
             }
         }
     }
 
     public void close() {
-        logger.debug("ahc isClosed {}", ahc.isClosed());
+        log.debug("ahc isClosed {}", ahc.isClosed());
         if (!ahc.isClosed()) {
             try {
                 ahc.close();

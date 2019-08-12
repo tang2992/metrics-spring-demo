@@ -2,6 +2,7 @@ package com.tangkf.metrics.reporter;
 
 import com.codahale.metrics.*;
 import com.codahale.metrics.Timer;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,8 +12,8 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by tangshangwen on 17-3-6.
  */
+@Slf4j
 public class OpenFalconReporter extends ScheduledReporter {
-    public static final Logger logger = LoggerFactory.getLogger(OpenFalconReporter.class);
 
     private final OpenFalcon openFalcon;
     private final Clock clock;
@@ -72,7 +73,7 @@ public class OpenFalconReporter extends ScheduledReporter {
         private MetricFilter filter;
         private int batchSize;
         private String tags;
-        private int step;
+        private int step = 60;
 
         private Builder(MetricRegistry registry) {
             this.registry = registry;
@@ -298,6 +299,7 @@ public class OpenFalconReporter extends ScheduledReporter {
 
     @Override
     public void stop() {
+
         super.stop();
         openFalcon.close();
     }

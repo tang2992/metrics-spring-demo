@@ -37,7 +37,7 @@ public class MetricsConfigurer extends MetricsConfigurerAdapter {
 //		return new ServletRegistrationBean(new MetricsServlet(metricRegistry), "/monitor/metrics");
 //	}
 	@Bean
-	public ServletRegistrationBean servletRegistrationBean() throws ServletException {
+	public ServletRegistrationBean servletRegistrationBean() {
 		AdminServlet adminServlet = new AdminServlet();
 		ServletRegistrationBean servletRegistrationBean = new ServletRegistrationBean(adminServlet, "/admin/*");
 		return servletRegistrationBean;
@@ -69,8 +69,8 @@ public class MetricsConfigurer extends MetricsConfigurerAdapter {
 	
 	@Override
 	public void configureReporters(MetricRegistry metricRegistry) {
-		OpenFalcon openFalcon = new OpenFalcon.Builder("http://localhost:1988").create();
-//		OpenFalconReporter.forRegistry(metricRegistry).build(openFalcon).start(15, TimeUnit.SECONDS);
+		OpenFalcon openFalcon = new OpenFalcon.Builder("http://47.106.137.38:1988").create();
+		OpenFalconReporter.forRegistry(metricRegistry).build(openFalcon).start(15, TimeUnit.SECONDS);
 		Slf4jReporter.forRegistry(metricRegistry).build().start(15, TimeUnit.SECONDS);
 	}
 }
