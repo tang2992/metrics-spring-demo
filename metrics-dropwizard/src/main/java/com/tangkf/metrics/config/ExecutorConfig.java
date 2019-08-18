@@ -1,6 +1,7 @@
 package com.tangkf.metrics.config;
 
 import com.codahale.metrics.MetricRegistry;
+import com.tangkf.metrics.threadpool.ThreadPoolMetricsGaugeSet;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

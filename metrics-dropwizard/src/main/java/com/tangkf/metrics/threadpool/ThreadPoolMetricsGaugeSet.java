@@ -29,7 +29,7 @@ public class ThreadPoolMetricsGaugeSet extends CachedMetricSet {
 
     private long[] threadPoolMetrics;
     private final ThreadPoolExecutor threadPoolExecutor;
-    private final Map<MetricName, Metric> metrics;
+    private final Map<String, Metric> metrics;
 
     public ThreadPoolMetricsGaugeSet(ThreadPoolExecutor threadPoolExecutor) {
         this(DEFAULT_DATA_TTL, TimeUnit.MILLISECONDS, Clock.defaultClock(), threadPoolExecutor);
@@ -46,7 +46,7 @@ public class ThreadPoolMetricsGaugeSet extends CachedMetricSet {
         }
         threadPoolMetrics = new long[THREAD_POOL_METRICS_GUAGES.length];
         this.threadPoolExecutor = threadPoolExecutor;
-        metrics = new HashMap<MetricName, Metric>(4);
+        metrics = new HashMap<>(4);
         populateGauges();
     }
 
@@ -67,7 +67,7 @@ public class ThreadPoolMetricsGaugeSet extends CachedMetricSet {
     }
 
     @Override
-    public Map<MetricName, Metric> getMetrics() {
+    public Map<String, Metric> getMetrics() {
         return metrics;
     }
 
@@ -75,7 +75,7 @@ public class ThreadPoolMetricsGaugeSet extends CachedMetricSet {
         // populate guages
         for (int i = 0; i < THREAD_POOL_METRICS_GUAGES.length; i++) {
             metrics.put(
-                    MetricName.build(THREAD_POOL_METRICS_GUAGES[i])
+                    MetricName.build(THREAD_POOL_METRICS_GUAGES[i]).getKey()
                     , new ThreadPoolGauge(i));
         }
     }

@@ -17,12 +17,13 @@
 package com.tangkf.metrics.threadpool;
 
 import com.codahale.metrics.Clock;
+import com.codahale.metrics.MetricSet;
 import com.tangkf.metrics.base.TagMetricSet;
 
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 
-public abstract class CachedMetricSet implements TagMetricSet {
+public abstract class CachedMetricSet implements MetricSet {
 
     protected static long DEFAULT_DATA_TTL = 5000;
 
