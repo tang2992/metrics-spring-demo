@@ -1,5 +1,6 @@
 package com.tangkf.metrics;
 
+import cn.hutool.core.util.RandomUtil;
 import com.codahale.metrics.annotation.*;
 import com.tangkf.metrics.service.AsyncService;
 import lombok.extern.slf4j.Slf4j;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.math.BigDecimal;
 import java.net.URI;
 import java.util.Random;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -68,5 +70,11 @@ public class TestController {
 		log.info("end submit");
 
 		return "success";
+	}
+
+	@ResponseBody
+	@RequestMapping("/test/api2-1")
+	public Double process2_1(){
+		return RandomUtil.randomDouble(1d);
 	}
 }

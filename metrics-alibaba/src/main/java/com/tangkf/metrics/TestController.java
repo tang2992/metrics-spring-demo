@@ -1,5 +1,6 @@
 package com.tangkf.metrics;
 
+import cn.hutool.core.util.RandomUtil;
 import com.alibaba.metrics.annotation.EnableCounter;
 import com.alibaba.metrics.annotation.EnableGauge;
 import com.alibaba.metrics.annotation.EnableTimer;
@@ -48,6 +49,14 @@ public class TestController {
 	@RequestMapping("/test/api2")
 	public Integer process2() {
         return new Random().nextInt(100);
+	}
+
+
+	@EnableGauge(group = "test", key = "test.api2-1")
+	@ResponseBody
+	@RequestMapping("/test/api2-1")
+	public Double process2_1(){
+		return RandomUtil.randomDouble(1d);
 	}
 
 	@EnableTimer(group = "test", key = "test.timer.api3")

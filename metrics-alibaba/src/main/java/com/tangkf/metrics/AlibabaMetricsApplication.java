@@ -36,8 +36,8 @@ public class AlibabaMetricsApplication implements ApplicationRunner {
 
 		OpenFalcon openFalcon = new OpenFalcon.Builder("http://47.106.137.38:1988").create();
 		OpenFalconReporter.forRegistry(registry).build(openFalcon, "test").start(20, TimeUnit.SECONDS);
-		OpenFalconMetricManagerReporter.forMetricManager(iMetricManager)
-				.metricsReportPeriodConfig(new MetricsCollectPeriodConfig()).build(openFalcon, "test").start(20, TimeUnit.SECONDS);
+//		OpenFalconMetricManagerReporter.forMetricManager(iMetricManager)
+//				.metricsReportPeriodConfig(new MetricsCollectPeriodConfig()).build(openFalcon, "test").start(20, TimeUnit.SECONDS);
 
 //		Bootstrap.init();
 	}
