@@ -1,6 +1,9 @@
 package com.tangkf.metrics.config;
 
+import com.alibaba.metrics.MetricManager;
+import com.alibaba.metrics.MetricName;
 import com.alibaba.metrics.MetricRegistry;
+import com.alibaba.metrics.reporter.Slf4jReporter;
 import com.alibaba.metrics.threadpool.ThreadPoolMetricsGaugeSet;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
@@ -15,17 +18,14 @@ import java.util.concurrent.*;
 @Configuration
 @EnableAsync
 public class ExecutorConfig {
-    @Resource
-    private MetricRegistry metricRegistry;
-
     @Bean
-    public Executor asyncServiceExecutor() {
+    public ThreadPoolTaskExecutor asyncServiceExecutor() {
         log.info("start asyncServiceExecutor");
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
         //配置核心线程数
-        executor.setCorePoolSize(5);
+        executor.setCorePoolSize(3);
         //配置最大线程数
-        executor.setMaxPoolSize(5);
+        executor.setMaxPoolSize(3);
         //配置队列大小
         executor.setQueueCapacity(99999);
         //配置线程池中的线程的名称前缀
@@ -38,8 +38,6 @@ public class ExecutorConfig {
         //执行初始化
         executor.initialize();
 
-        // 注册到度量
-        metricRegistry.registerAll(new ThreadPoolMetricsGaugeSet(executor.getThreadPoolExecutor()));
         return executor;
     }
 }

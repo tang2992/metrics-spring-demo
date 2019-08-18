@@ -53,7 +53,7 @@ public class TestController {
     @ResponseBody
 	@RequestMapping("/test/api2")
 	public Integer process2() {
-        return new Random().nextInt();
+        return new Random().nextInt(5);
 	}
 
 	@Timed

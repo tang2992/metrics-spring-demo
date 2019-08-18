@@ -21,13 +21,18 @@ import com.alibaba.metrics.integrate.ConfigFields;
 import com.alibaba.metrics.integrate.LoggerProvider;
 import com.alibaba.metrics.integrate.MetricsIntegrateUtils;
 import com.alibaba.metrics.rest.server.MetricsHttpServer;
+import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import java.util.Properties;
 
+@Component
 public class Bootstrap {
 
     private static MetricsHttpServer metricsHttpServer = null;
 
+    @PostConstruct
     public static void init() {
         init(System.getProperty(ConfigFields.CONFIG_FILE_NAME));
     }
@@ -48,6 +53,7 @@ public class Bootstrap {
         MetricsIntegrateUtils.registerJvmAttributeMetrics(config);
     }
 
+    @PreDestroy
     public static void destroy() {
         if (metricsHttpServer != null) {
             metricsHttpServer.stop();

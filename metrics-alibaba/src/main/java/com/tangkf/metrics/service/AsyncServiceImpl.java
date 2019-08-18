@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class AsyncServiceImpl implements AsyncService {
 
-    @EnableMeter(group = "test", key="test.async.task.executor")
+//    @EnableMeter(group = "test", key="test.async.task.executor")
     @Override
     @Async("asyncServiceExecutor")
     public void executeAsync() {
@@ -19,6 +19,6 @@ public class AsyncServiceImpl implements AsyncService {
         }catch(Exception e){
             e.printStackTrace();
         }
-        log.info("end executeAsync");
+//        log.info("end executeAsync");
     }
 }

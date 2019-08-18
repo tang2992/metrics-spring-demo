@@ -13,13 +13,11 @@ import org.apache.http.client.methods.HttpGet;
 public class RestProvider {
 	
 	@Inject private HttpClient httpClient;
-	@Inject private MetricRegistry registry;
-	
+
 	@EnableTimer(group = "test", key = "test.rest.get")
 	public HttpResponse get(URI uri) {
 		try {
-			registry.counter(MetricRegistry.name(RestProvider.class, "counter")).inc();
-			
+
 			HttpGet httpget = new HttpGet(uri.toURL().toExternalForm());
 			HttpResponse response = this.httpClient.execute(httpget);
 			if (response.getStatusLine().getStatusCode() != 200) {
