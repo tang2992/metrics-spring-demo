@@ -27,7 +27,7 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import java.util.Properties;
 
-@Component
+//@Component
 public class Bootstrap {
 
     private static MetricsHttpServer metricsHttpServer = null;
@@ -49,8 +49,8 @@ public class Bootstrap {
         if (MetricsIntegrateUtils.isEnabled(config, "com.alibaba.metrics.http_server.start")) {
             startHttpServer();
         }
-        MetricsIntegrateUtils.registerJvmMetrics(config);
-        MetricsIntegrateUtils.registerJvmAttributeMetrics(config);
+//        MetricsIntegrateUtils.registerJvmMetrics(config);
+//        MetricsIntegrateUtils.registerJvmAttributeMetrics(config);
     }
 
     @PreDestroy

@@ -29,7 +29,7 @@ public class TestController {
 	private AsyncService asyncService;
 
 
-//	@EnableCounter(group = "test", key = "test.api1.counter")
+	@EnableCounter(group = "test", key = "test.api1.counter")
 	@ResponseBody
 	@RequestMapping("/test/api")
 	public String process(HttpServletRequest request, HttpServletResponse response) 
@@ -43,14 +43,14 @@ public class TestController {
 		return resp.getEntity().toString();
 	}
 
-//	@EnableGauge(group = "test", key = "test.api2")
+	@EnableGauge(group = "test", key = "test.api2")
     @ResponseBody
 	@RequestMapping("/test/api2")
 	public Integer process2() {
-        return new Random().nextInt();
+        return new Random().nextInt(100);
 	}
 
-//	@EnableTimer(group = "test", key = "test.timer.api3")
+	@EnableTimer(group = "test", key = "test.timer.api3")
 	@ResponseBody
 	@RequestMapping("/test/api3")
 	public String submit(){

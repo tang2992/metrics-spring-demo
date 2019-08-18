@@ -62,7 +62,7 @@ public class TestControllerTest {
         MetricName name = MetricName.build("threadpool");
         MetricManager.register("test", name, new ThreadPoolMetricsGaugeSet(asyncServiceExecutor.getThreadPoolExecutor()));
         MetricRegistry registry = MetricManager.getIMetricManager().getMetricRegistryByGroup("test");
-        Slf4jReporter.forRegistry(registry).build().start(20, TimeUnit.MILLISECONDS);
+        Slf4jReporter.forRegistry(registry).build().start(20, TimeUnit.SECONDS);
 
         while (true) {
             MvcResult result = mockMvc.perform(post("/test/api3"))
